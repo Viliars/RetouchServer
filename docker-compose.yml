@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  retouch-server:
+    image: retouch-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - PORT=2600
+      - MODEL_PATH=/app/retouch.pt
+    ports:
+      - 2600:2600
+    restart: unless-stopped
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
